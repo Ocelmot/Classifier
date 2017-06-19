@@ -6,7 +6,10 @@ module.exports = function(){
 	var evidence_index = {};
 	var evidence_array = [];
 
-	var categories = {};
+	var category_index = {};
+	var category_array = [];
+
+	//var categories = {};
 
 	// var category_totals = {};
 	// var category_evidence = {};
@@ -16,21 +19,24 @@ module.exports = function(){
 
 
 	function createCategory(category){
-		if (categories[category] == null){
-			categories[category] = {
+		var c_index = category_index[category];
+		if (category_array[c_index] == null){
+			category_array.push({
 				name: category,
 				total: 0,
 				evidence: Array(evidence_array.length).fill(0)
-			};
+			});
+			return category_array.length-1;
 		}
+		return c_index;
 	}
 	function addEvidence(evidence){
 		var e_index = evidence_index[evidence];
 		if (e_index == null){
 			evidence_array.push(evidence);
 			evidence_index[evidence] = evidence_array.length-1;
-			for(var c in categories){
-				categories[c].evidence.push(0);
+			for (var i = category_array.length - 1; i >= 0; i--) {
+				category_array[i].evidence.push(0);
 			}
 			return evidence_array.length - 1;
 		}
@@ -43,11 +49,12 @@ module.exports = function(){
 			console.error('Training with no category');
 			return;
 		}
-		if(categories[category] == null){
-			createCategory(category);
+		var c_index  = category_index[category];
+		if(c_index == null){
+			c_index = createCategory(category);
 		}
 		all_total++;
-		categories[category].total++;
+		category_array[c_index].total++;
 
 		var evi = evidence.get();
 
@@ -61,7 +68,7 @@ module.exports = function(){
 			}
 			//console.log('e_index2', e_index);
 			
-			categories[category].evidence[e_index] ++;
+			category_array[c_index].evidence[e_index] ++;
 		}
 	}
 	
@@ -72,32 +79,45 @@ module.exports = function(){
 		var max_prob = Number.NEGATIVE_INFINITY;
 		var max_cat;
 
-		var probs = {};
+		//var probs = [];
 
-		for(var c in categories){
-			console.log('Testing Category:', c);
-			var prob = probability_for_category(c, evidence, debug);
-			console.log('probability for', c, 'is', prob);
-			probs[c] = prob;
+		for (var i = category_array.length - 1; i >= 0; i--) {
+			//var c = category_array[i];
+			console.log('Testing Category:', category_array[i].name);
+			var prob = probability_for_category(category_array[i], evidence, debug);
+			console.log('probability for', category_array[i].name, 'is', prob);
+			//probs[c] = prob;
 			if(prob > max_prob){
 				//console.log('found max');
 				max_prob = prob;
-				max_cat = c.name;
+				max_cat = category_array[i].name;
 			}
-
-		};
-		if (debug){
-			var sort_category = 'ham';
-			var debug_data = Object.values(debug_evidence);
-			debug_data.sort(function(a, b){
-				return b[sort_category] - a[sort_category];
-			});
-
-			debug_data.push({Observation: 'Total', ham: probs['ham'], spam: probs['spam'],});
-
-			console.log(columnify(debug_data));
-			console.log(evidence.get());
 		}
+
+		// for(var c in categories){
+		// 	console.log('Testing Category:', c);
+		// 	var prob = probability_for_category(c, evidence, debug);
+		// 	console.log('probability for', c, 'is', prob);
+		// 	probs[c] = prob;
+		// 	if(prob > max_prob){
+		// 		//console.log('found max');
+		// 		max_prob = prob;
+		// 		max_cat = c.name;
+		// 	}
+
+		// };
+		// if (debug){
+		// 	var sort_category = 'ham';
+		// 	var debug_data = Object.values(debug_evidence);
+		// 	debug_data.sort(function(a, b){
+		// 		return b[sort_category] - a[sort_category];
+		// 	});
+
+		// 	debug_data.push({Observation: 'Total', ham: probs['ham'], spam: probs['spam'],});
+
+		// 	console.log(columnify(debug_data));
+		// 	console.log(evidence.get());
+		// }
 
 		
 		return max_cat;
@@ -105,26 +125,17 @@ module.exports = function(){
 
 	function probability_for_category(category, evidence, debug = false){
 		var prob = 0;
-		var cat = categories[category];
+		//var cat = categories[category];
 
-		if (cat == null) {
+		if (category == null) {
 			console.warn('Category', category, 'does not exist');
 			return 0;
 		}
 
-// if (category == 'same') {
-// 			console.log(cat);
-// 		process.exit();
-// }
-
-		// console.log(cat);
-		// process.exit();
-
-
 		for (var i = evidence_array.length - 1; i >= 0; i--) {
 			
 
-			var row_prob = (cat.evidence[i]+epsilon) / (cat.total+(2*epsilon));
+			var row_prob = (category.evidence[i]+epsilon) / (category.total+(2*epsilon));
 			if (evidence.has(evidence_array[i])) {
 				prob += Math.log(row_prob);
 			}else{
@@ -132,7 +143,7 @@ module.exports = function(){
 			}
 		}
 
-		return prob - Math.log(cat.total/all_total);
+		return prob - Math.log(category.total/all_total);
 	}
 	
 	var exceptions = {};
