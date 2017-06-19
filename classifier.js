@@ -33,10 +33,11 @@ module.exports = function(){
 	function addEvidence(evidence){
 		var e_index = evidence_index[evidence];
 		if (e_index == null){
-			evidence_array.push(evidence);
+			evidence_array[evidence_array.length] = evidence;
+			//evidence_array.push(evidence);
 			evidence_index[evidence] = evidence_array.length-1;
 			for (var i = category_array.length - 1; i >= 0; i--) {
-				category_array[i].evidence.push(0);
+				category_array[i].evidence[category_array[i].evidence.length] = 0;
 			}
 			return evidence_array.length - 1;
 		}
@@ -67,15 +68,15 @@ module.exports = function(){
 				e_index = addEvidence(evi[i]);
 			}
 			//console.log('e_index2', e_index);
-			
+
 			category_array[c_index].evidence[e_index] ++;
 		}
 	}
-	
+
 	function classify(evidence, debug = false){
 
 
-		
+
 		var max_prob = Number.NEGATIVE_INFINITY;
 		var max_cat;
 
@@ -119,7 +120,7 @@ module.exports = function(){
 		// 	console.log(evidence.get());
 		// }
 
-		
+
 		return max_cat;
 	}
 
@@ -133,7 +134,7 @@ module.exports = function(){
 		}
 
 		for (var i = evidence_array.length - 1; i >= 0; i--) {
-			
+
 
 			var row_prob = (category.evidence[i]+epsilon) / (category.total+(2*epsilon));
 			if (evidence.has(evidence_array[i])) {
@@ -145,7 +146,7 @@ module.exports = function(){
 
 		return prob - Math.log(category.total/all_total);
 	}
-	
+
 	var exceptions = {};
 	function evidence(){
 		var cat = null;

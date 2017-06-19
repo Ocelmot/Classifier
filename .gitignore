@@ -1,3 +1,5 @@
 node_modules/**
 data/**
-*.sublime-project
+*.sublime-*
+isolate-*
+stacks*
