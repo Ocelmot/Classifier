@@ -4,8 +4,28 @@
 		"selected_items":
 		[
 			[
+				"categ",
+				"category"
+			],
+			[
 				"train",
-				"train_file"
+				"train_count"
+			],
+			[
+				"tr",
+				"train_count"
+			],
+			[
+				"cate",
+				"categories"
+			],
+			[
+				"eviden",
+				"evidence_array"
+			],
+			[
+				"evidence",
+				"evidence_array"
 			],
 			[
 				"debug",
@@ -32,10 +52,6 @@
 				"row_prob"
 			],
 			[
-				"cate",
-				"category"
-			],
-			[
 				"probab",
 				"probability_for_class"
 			],
@@ -50,10 +66,6 @@
 			[
 				"get",
 				"getCategory"
-			],
-			[
-				"evidence",
-				"Evidence"
 			],
 			[
 				"image",
@@ -87,6 +99,24 @@
 	},
 	"buffers":
 	[
+		{
+			"file": "index.js",
+			"settings":
+			{
+				"buffer_size": 4323,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "classifier.js",
+			"settings":
+			{
+				"buffer_size": 3697,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		}
 	],
 	"build_system": "",
 	"build_system_choices":
@@ -132,10 +162,14 @@
 	},
 	"expanded_folders":
 	[
-		"/C/Users/Chrys/Dropbox/Classifier"
+		"/Users/chrys/Dropbox (Personal)/Classifier",
+		"/Users/chrys/Dropbox (Personal)/Classifier/data",
+		"/Users/chrys/Dropbox (Personal)/Classifier/data/Quora"
 	],
 	"file_history":
 	[
+		"/Users/chrys/Dropbox (Personal)/Classifier/data/Quora/train.csv",
+		"/Users/chrys/Dropbox (Personal)/Classifier/data/Quora/test.csv",
 		"/C/Users/Chrys/Dropbox/Classifier/package.json",
 		"/C/Users/Chrys/Desktop/flamegraph/flames.py",
 		"/C/Users/Chrys/Desktop/etw/etwpackage1.47/etwpackage/bin/flame_graph.pl",
@@ -177,6 +211,9 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"category",
+			"C.P.H.4",
+			"cousin",
 			"con",
 			"getCate",
 			"total_count",
@@ -204,8 +241,71 @@
 	"groups":
 	[
 		{
+			"selected": 1,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": "index.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4323,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								754,
+								754
+							]
+						],
+						"settings":
+						{
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "classifier.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3697,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2592,
+								2592
+							]
+						],
+						"settings":
+						{
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 1379.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				}
 			]
 		}
 	],
@@ -290,7 +390,7 @@
 	"show_open_files": true,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 200.0,
+	"side_bar_width": 248.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{

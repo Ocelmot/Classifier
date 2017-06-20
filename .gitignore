@@ -3,3 +3,4 @@ data/**
 *.sublime-*
 isolate-*
 stacks*
+npm-debug.log

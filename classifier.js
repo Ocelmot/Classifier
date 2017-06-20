@@ -26,6 +26,7 @@ module.exports = function(){
 				total: 0,
 				evidence: Array(evidence_array.length).fill(0)
 			});
+			category_index[category] = category_array.length-1;
 			return category_array.length-1;
 		}
 		return c_index;
@@ -68,8 +69,13 @@ module.exports = function(){
 				e_index = addEvidence(evi[i]);
 			}
 			//console.log('e_index2', e_index);
-
-			category_array[c_index].evidence[e_index] ++;
+			category_array[c_index].evidence[e_index]++;
+			// if (category_array[c_index].evidence[e_index]){
+			// 	category_array[c_index].evidence[e_index]++;
+			// }else{
+			// 	category_array[c_index].evidence[e_index] = 0;
+			// }
+			
 		}
 	}
 
@@ -84,9 +90,9 @@ module.exports = function(){
 
 		for (var i = category_array.length - 1; i >= 0; i--) {
 			//var c = category_array[i];
-			console.log('Testing Category:', category_array[i].name);
+			//console.log('Testing Category:', category_array[i].name);
 			var prob = probability_for_category(category_array[i], evidence, debug);
-			console.log('probability for', category_array[i].name, 'is', prob);
+			//console.log('probability for', category_array[i].name, 'is', prob);
 			//probs[c] = prob;
 			if(prob > max_prob){
 				//console.log('found max');
