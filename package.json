@@ -2,7 +2,7 @@
   "name": "classifier",
   "version": "1.0.0",
   "description": "",
-  "main": "classifier.js",
+  "main": "Classifier.js",
   "scripts": {
   },
   "author": "",
