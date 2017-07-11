@@ -1,3 +1,4 @@
+const Stats = require('./stats');
 const Classifier = require('./classifier');
 
 const parse = require('csv-parse/lib/sync');
@@ -16,27 +17,40 @@ function shuffle(a) {
 }
 
 var slice_index = 300000;
+var slice_end = 10000;
 console.log('loading training data');
 var train_data = parse(fs.readFileSync(train_file, 'utf-8'));
-var test_data1 = train_data.slice(slice_index);
+var test_data1 = train_data.slice(slice_index, slice_index+slice_end);
 train_data = train_data.slice(0, slice_index);
 // console.log('loading testing data');
 // var test_data2 = parse(fs.readFileSync(test_file, 'utf-8'));
 console.log('data loaded');
 
+var cleaner = function(a){
+	a = a.toLowerCase();
+	a = a.replace(/['’]/g, '');
+	a = a.replace(/[,.!?"&%(—)/;”“+0-9-]/g, ' ');
+	return a;
+};
 
 console.log('training');
 var classifier = Classifier();
+//classifier.setEvidenceFilter(cleaner);
 for (var i = train_data.length - 1; i >= 0; i--) {
 
 	if((train_data.length - i)% 1000 == 0){
 		console.log('trained', train_data.length - i, 'of', train_data.length);
 	}
 	
-	
 	var words = {};
-	var first_question = train_data[i][3].split(' ');
-	var second_question = train_data[i][4].split(' ');
+	var first_question = train_data[i][3];
+	var second_question = train_data[i][4];
+
+	first_question = cleaner(first_question);
+	second_question = cleaner(second_question);
+
+	first_question = first_question.split(' ');
+	second_question = second_question.split(' ');
 
 	for(var word of first_question){
 		words[word] = 1;
@@ -67,21 +81,32 @@ for (var i = train_data.length - 1; i >= 0; i--) {
 	classifier.train(evidence);
 }
 
+classifier.dump_evidence();
+return;
 
 console.log('training complete');
 console.log('testing classification model');
 var correct = 0;
+var avg_log_loss = 0;
 
 for (var i = test_data1.length - 1; i >= 0; i--) {
 
 	if((test_data1.length - i)% 100 == 0){
 		console.log('tested', test_data1.length - i, 'of', test_data1.length);
+		console.log(correct, 'of', test_data1.length - i, (correct/(test_data1.length - i)) +'%');
+		console.log('log loss:', avg_log_loss/(test_data1.length - i));
 	}
 	
 	
 	var words = {};
-	var first_question = test_data1[i][3].split(' ');
-	var second_question = test_data1[i][4].split(' ');
+	var first_question = test_data1[i][3];
+	var second_question = test_data1[i][4];
+
+	first_question = cleaner(first_question);
+	second_question = cleaner(second_question);
+
+	first_question = first_question.split(' ');
+	second_question = second_question.split(' ');
 
 	for(var word of first_question){
 		words[word] = 1;
@@ -105,16 +130,24 @@ for (var i = test_data1.length - 1; i >= 0; i--) {
 	}
 
 	var classification = classifier.classify(evidence);
-	if (classification == 'same' && test_data1[i][5] == 1) {
+	var  p = classification == 'same'?classification.probability:1-classification.probability;
+	var row_log_loss = Stats.log_loss(p, test_data1[i][5]);
+	avg_log_loss += row_log_loss;
+
+	if (classification.category == 'same' && test_data1[i][5] == 1) {
 		correct ++;
 	}
-	if (classification == 'diff' && test_data1[i][5] == 0) {
+	if (classification.category == 'diff' && test_data1[i][5] == 0) {
 		correct ++;
 	}
+
+	//console.log(classification.category, classification.probability);
 }
+var avg_log_loss = avg_log_loss / test_data1.length;
 
 
 console.log(correct, 'of', test_data1.length);
+console.log('log loss:', avg_log_loss);
 
 
 
@@ -133,6 +166,11 @@ fs.readFile(filename, {encoding: 'utf-8'}, function(err,data){
 	csv_parse(data, function(err, data){
 		//console.log(data.length);
 		var classifier = Classifier();
+		classifier.setEvidenceFilter(function(a){
+			a = a.toLowerCase();
+			a = a.replace(/['’]/g, '');
+			a = a.replace(/[,.!?"&%(—)/;”“+0-9-]/g, ' ');
+		});
 
 		data = data.slice(1);
 

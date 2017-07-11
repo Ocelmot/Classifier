@@ -1,6 +1,7 @@
+const Stats = require('./stats');
 var columnify = require('columnify');
 module.exports = function(){
-	var epsilon = 0.00000001;
+	var epsilon = Stats.epsilon;
 
 
 	var evidence_index = {};
@@ -9,12 +10,6 @@ module.exports = function(){
 	var category_index = {};
 	var category_array = [];
 
-	//var categories = {};
-
-	// var category_totals = {};
-	// var category_evidence = {};
-
-	//var all_evidence = {};
 	var all_total=0;
 
 
@@ -85,6 +80,7 @@ module.exports = function(){
 
 		var max_prob = Number.NEGATIVE_INFINITY;
 		var max_cat;
+		var total_probability = 0;
 
 		//var probs = [];
 
@@ -94,6 +90,7 @@ module.exports = function(){
 			var prob = probability_for_category(category_array[i], evidence, debug);
 			//console.log('probability for', category_array[i].name, 'is', prob);
 			//probs[c] = prob;
+			total_probability += Math.exp(prob);
 			if(prob > max_prob){
 				//console.log('found max');
 				max_prob = prob;
@@ -126,8 +123,8 @@ module.exports = function(){
 		// 	console.log(evidence.get());
 		// }
 
-
-		return max_cat;
+		//console.log('total_probability', total_probability);
+		return {category:max_cat, probability:Math.exp(max_prob)/total_probability};
 	}
 
 	function probability_for_category(category, evidence, debug = false){
@@ -154,10 +151,12 @@ module.exports = function(){
 	}
 
 	var exceptions = {};
+	var evidence_filter = function(a){return a;};
 	function evidence(){
 		var cat = null;
 		var evi = {};
 		function add(observation){
+			observation = evidence_filter(observation);
 			if(observation == null || observation == ''){
 				return;
 			}
@@ -191,9 +190,19 @@ module.exports = function(){
 	function addException(exception){
 		exceptions[exception] = 1;
 	}
+	function setEvidenceFilter(funct){
+		evidence_filter = funct;
+	}
+	function dump_evidence(){
+		for (var i = evidence_array.length - 1; i >= 0; i--) {
+			console.log(evidence_array[i]);
+		}
+	}
 	return {
 		Evidence: evidence,
 		train: train,
-		classify: classify
+		classify: classify,
+		setEvidenceFilter: setEvidenceFilter,
+		dump_evidence: dump_evidence
 	};
 }

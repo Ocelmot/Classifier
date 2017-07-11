@@ -4,6 +4,54 @@
 		"selected_items":
 		[
 			[
+				"to",
+				"toLowerCase"
+			],
+			[
+				"evidence",
+				"evidence_filter"
+			],
+			[
+				"set",
+				"setEvidenceFilter"
+			],
+			[
+				"total",
+				"total_probability"
+			],
+			[
+				"slice",
+				"slice_end"
+			],
+			[
+				"row",
+				"row_log_loss"
+			],
+			[
+				"max",
+				"max_prob"
+			],
+			[
+				"e",
+				"epsilon"
+			],
+			[
+				"cate",
+				"category_index"
+			],
+			[
+				"category",
+				"category_array"
+			],
+			[
+				"length",
+				"length-1"
+			],
+			[
+				"cat",
+				"category_array"
+			],
+			[
 				"categ",
 				"category"
 			],
@@ -16,15 +64,7 @@
 				"train_count"
 			],
 			[
-				"cate",
-				"categories"
-			],
-			[
 				"eviden",
-				"evidence_array"
-			],
-			[
-				"evidence",
 				"evidence_array"
 			],
 			[
@@ -48,20 +88,12 @@
 				"test_count"
 			],
 			[
-				"row",
-				"row_prob"
-			],
-			[
 				"probab",
 				"probability_for_class"
 			],
 			[
 				"all",
 				"all_total"
-			],
-			[
-				"category",
-				"category_totals"
 			],
 			[
 				"get",
@@ -103,7 +135,7 @@
 			"file": "index.js",
 			"settings":
 			{
-				"buffer_size": 4323,
+				"buffer_size": 5634,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
@@ -112,9 +144,28 @@
 			"file": "classifier.js",
 			"settings":
 			{
-				"buffer_size": 3697,
+				"buffer_size": 5115,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "stats.js",
+			"settings":
+			{
+				"buffer_size": 391,
+				"encoding": "UTF-8",
+				"line_ending": "Unix",
+				"name": "module.exports.epsilon = 0.0000000001;"
+			}
+		},
+		{
+			"file": ".gitignore",
+			"settings":
+			{
+				"buffer_size": 67,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
 			}
 		}
 	],
@@ -163,8 +214,7 @@
 	"expanded_folders":
 	[
 		"/Users/chrys/Dropbox (Personal)/Classifier",
-		"/Users/chrys/Dropbox (Personal)/Classifier/data",
-		"/Users/chrys/Dropbox (Personal)/Classifier/data/Quora"
+		"/Users/chrys/Dropbox (Personal)/Classifier/data"
 	],
 	"file_history":
 	[
@@ -211,6 +261,8 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"classifier",
+			"createCategory",
 			"category",
 			"C.P.H.4",
 			"cousin",
@@ -241,7 +293,7 @@
 	"groups":
 	[
 		{
-			"selected": 1,
+			"selected": 0,
 			"sheets":
 			[
 				{
@@ -250,15 +302,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 4323,
+						"buffer_size": 5634,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								754,
-								754
+								2135,
+								2135
 							]
 						],
 						"settings":
@@ -269,10 +321,10 @@
 							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax"
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 752.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 0,
 					"type": "text"
 				},
 				{
@@ -281,15 +333,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 3697,
+						"buffer_size": 5115,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2592,
-								2592
+								5077,
+								5077
 							]
 						],
 						"settings":
@@ -300,10 +352,71 @@
 							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax"
 						},
 						"translation.x": 0.0,
-						"translation.y": 1379.0,
+						"translation.y": 2466.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "stats.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 391,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								217,
+								217
+							]
+						],
+						"settings":
+						{
+							"auto_name": "module.exports.epsilon = 0.0000000001;",
+							"incomplete_sync": null,
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": ".gitignore",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 67,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								67,
+								67
+							]
+						],
+						"settings":
+						{
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
 					"type": "text"
 				}
 			]
