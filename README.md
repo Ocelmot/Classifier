@@ -39,7 +39,7 @@ c.train(e);
 ```
 
 ### Classify Evidence
-Once you have finished training the classifier, you can classify evidence by passing it to the classifier's classify method.
+Once you have finished training the classifier, you can classify evidence by passing it to the classify method.
 ``` js
 var result = c.classify(e);
 console.log(result)
@@ -48,5 +48,5 @@ The classify method returns the category name as a string.
 
 ## Misc
 * You may repeat the evidence creation, training, and classification as many times as you need.
-* You may create multiple classifiers, they will train and classify independently.
-* The classifier will automaticly add categories as it sees evidence of them.
+* You may create multiple classifiers. They will train and classify independently.
+* The classifier will automatically add categories as it sees evidence of them.
